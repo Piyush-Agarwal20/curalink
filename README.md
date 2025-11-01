@@ -1,142 +1,4 @@
-<div align="center">
-
-**Made with ❤️ for better healthcare outcomes**
-
-⭐ Star this repo if you find it helpful!
-
-</div>
-
-💡 WHAT MAKES THIS README GREAT:
-✅ Clear problem statement - Why CuraLink exists
-✅ Professional presentation - Badges, formatting, structure
-✅ Complete tech stack - Shows your technical decisions
-✅ Easy setup instructions - Anyone can run it locally
-✅ Project structure - Clear organization
-✅ Future roadmap - Shows vision and planning
-✅ Contact info - Professional touch
-
-Want me to customize any section further? (e.g., add your name, GitHub username, specific features, etc.) 🚀RetryPAgive me single  Readme.md codeOrchestrated comprehensive README compilation for seamless copying.The user wants a single, complete README.md file that they can just copy and paste. Let me create one comprehensive README.md with all the sections in a single code block.markdown# 🏥 CuraLink
-
-### AI-Powered Healthcare Connection Platform
-
-> Bridging the gap between patients seeking treatment and researchers advancing medical science
-
-[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104-009688)](https://fastapi.tiangolo.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192)](https://www.postgresql.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
----
-
-## 🌟 What is CuraLink?
-
-CuraLink is a comprehensive healthcare platform that solves a critical problem in medical research and patient care: **the disconnect between patients looking for treatment options and researchers conducting groundbreaking clinical trials.**
-
-### The Problem We're Solving
-
-- 📊 **86% of clinical trials fail to meet enrollment deadlines** due to difficulty finding eligible participants
-- 🔍 Patients struggle to discover relevant clinical trials and expert specialists
-- 🤝 Researchers find it challenging to connect with potential collaborators and patients
-- 📚 Medical information is scattered across multiple platforms and difficult to understand
-
-### Our Solution
-
-CuraLink provides a **unified, AI-powered platform** where:
-
-✅ **Patients** can discover clinical trials, connect with health experts, and understand complex medical research  
-✅ **Researchers** can find collaborators, manage trials, and engage with the patient community  
-✅ **AI** simplifies medical jargon and intelligently matches users with relevant resources
-
----
-
-## ✨ Key Features
-
-### 👥 For Patients & Caregivers
-
-| Feature | Description |
-|---------|-------------|
-| **🔍 Smart Clinical Trial Discovery** | Natural language search powered by AI to find relevant trials based on your condition |
-| **👨‍⚕️ Expert Matching** | Connect with health specialists who focus on your specific medical needs |
-| **📚 Simplified Medical Research** | Access publications from top journals with AI-generated summaries in plain language |
-| **💬 Community Forums** | Ask questions and get answers from verified researchers |
-| **⭐ Personalized Dashboard** | Track saved trials, experts, and publications in one place |
-
-### 🔬 For Researchers
-
-| Feature | Description |
-|---------|-------------|
-| **🤝 Collaborator Network** | Find and connect with researchers in complementary fields |
-| **🧪 Trial Management** | Post, manage, and track your clinical trials |
-| **📄 Publication Showcase** | Auto-import from ORCID/ResearchGate and display your work |
-| **💬 Patient Engagement** | Answer questions and build trust with the patient community |
-| **📊 Smart Recommendations** | AI-powered suggestions for potential collaborations |
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-```
-Framework:     Next.js 14 (React 18)
-Language:      TypeScript
-Styling:       Tailwind CSS
-UI Components: shadcn/ui
-State:         Zustand
-HTTP Client:   Axios
-Icons:         Lucide React
-```
-
-### Backend
-```
-Framework:     FastAPI (Python 3.11+)
-ORM:           SQLAlchemy
-Database:      PostgreSQL 15
-Auth:          JWT (JSON Web Tokens)
-Validation:    Pydantic
-Migrations:    Alembic
-```
-
-### AI & External Services
-```
-NLP Engine:           OpenAI GPT-4
-Medical NER:          BioBERT / spaCy
-Embeddings:           Sentence Transformers
-Clinical Trials:      ClinicalTrials.gov API
-Publications:         PubMed E-utilities API
-Researcher Data:      ORCID API, ResearchGate
-Academic Search:      Google Scholar (SerpAPI)
-```
-
-### Infrastructure
-```
-Frontend Hosting:     Vercel
-Backend Hosting:      Render / Railway
-Database:             Supabase
-Version Control:      Git & GitHub
-CI/CD:                GitHub Actions
-```
-
----
-
-## 🏗️ System Architecture
-┌─────────────────────────────────────────────────────────┐
-│                    CLIENT LAYER                          │
-│         (Next.js - Responsive Web Application)           │
-└──────────────────────┬──────────────────────────────────┘
-│ REST API (HTTPS)
-▼
-┌─────────────────────────────────────────────────────────┐
-│                  APPLICATION LAYER                       │
-│              (FastAPI Backend Services)                  │
-│                                                          │
-│  ┌──────────┬──────────┬──────────┬──────────┐         │
-│  │   Auth   │ Matching │   NLP    │  Forums  │         │
-│  │  Service │  Engine  │ Service  │  Service │         │
-│  └──────────┴──────────┴──────────┴──────────┘         │
-└───────┬─────────────────┬────────────────┬──────────────┘
-│                 │                │
-▼                 ▼RetryPAI need in such a way that I copy paste and use itEngineered ready-to-use README without placeholder modifications.The user wants a single, complete README.md file that they can copy and paste directly without any modifications. Let me create a clean, complete version with no placeholders or interruptions.markdown# 🏥 CuraLink
+markdown# 🏥 CuraLink
 
 ### AI-Powered Healthcare Connection Platform
 
@@ -549,6 +411,8 @@ vercel --prod
 **connections** - Researcher-to-researcher connections  
 **meeting_requests** - Patient-to-researcher meeting requests  
 
+[Full schema available in `/docs/DATABASE_SCHEMA.md`]
+
 ---
 
 ## 🧪 Testing
@@ -557,7 +421,7 @@ vercel --prod
 cd backend
 pytest
 
-# Frontend tests
+# Frontend tests (if implemented)
 cd frontend
 npm test
 ```
@@ -601,7 +465,17 @@ This project was built for a hackathon. If you'd like to contribute or build upo
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👤 Author
+
+**Your Name**
+
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
+- Email: your.email@example.com
 
 ---
 
@@ -619,8 +493,16 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For questions, issues, or feedback:
 - 📧 Email: support@curalink.com
-- 💬 Telegram: Join our group
-- 🐛 Issues: GitHub Issues
+- 💬 Telegram: [Join our group](https://t.me/+R-WNywM9ZOdhYmM1)
+- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/curalink/issues)
+
+---
+
+## 🎥 Demo
+
+**🔗 Live Demo:** [https://curalink.vercel.app](https://curalink.vercel.app)  
+**📹 Demo Video:** [Watch on YouTube](https://youtube.com/...)  
+**📚 API Docs:** [https://curalink-api.render.com/docs](https://curalink-api.render.com/docs)
 
 ---
 
@@ -631,3 +513,14 @@ For questions, issues, or feedback:
 ⭐ Star this repo if you find it helpful!
 
 </div>
+
+💡 WHAT MAKES THIS README GREAT:
+✅ Clear problem statement - Why CuraLink exists
+✅ Professional presentation - Badges, formatting, structure
+✅ Complete tech stack - Shows your technical decisions
+✅ Easy setup instructions - Anyone can run it locally
+✅ Project structure - Clear organization
+✅ Future roadmap - Shows vision and planning
+✅ Contact info - Professional touch
+
+Want me to customize any section further? (e.g., add your name, GitHub username, specific features, etc.) 🚀RetryPAgive me single  Readme.md codeOrchestrated comprehensive README compilation for seamless copying.The user wants a single, complete README.md file that they can just copy and paste. Let me create one comprehensive README.md with all the sections in a single code block.markdown# 🏥 CuraLink
