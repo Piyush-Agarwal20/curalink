@@ -5,7 +5,8 @@ markdown# 🏥 CuraLink
 > Bridging the gap between patients seeking treatment and researchers advancing medical science
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104-009688)](https://fastapi.tiangolo.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.18-000000)](https://expressjs.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192)](https://www.postgresql.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -72,23 +73,25 @@ Icons:         Lucide React
 
 ### Backend
 ```
-Framework:     FastAPI (Python 3.11+)
-ORM:           SQLAlchemy
+Runtime:       Node.js 18+
+Framework:     Express.js
+Language:      TypeScript
+ORM:           Prisma
 Database:      PostgreSQL 15
 Auth:          JWT (JSON Web Tokens)
-Validation:    Pydantic
-Migrations:    Alembic
+Validation:    express-validator / Zod
+Security:      Helmet, bcryptjs
 ```
 
 ### AI & External Services
 ```
-NLP Engine:           OpenAI GPT-4
-Medical NER:          BioBERT / spaCy
-Embeddings:           Sentence Transformers
+NLP Engine:           OpenAI GPT-4 API
+Medical NER:          Natural Language API
+Embeddings:           OpenAI Embeddings
 Clinical Trials:      ClinicalTrials.gov API
 Publications:         PubMed E-utilities API
 Researcher Data:      ORCID API, ResearchGate
-Academic Search:      Google Scholar (SerpAPI)
+Academic Search:      Semantic Scholar API
 ```
 
 ### Infrastructure
@@ -112,7 +115,7 @@ CI/CD:                GitHub Actions
                        ▼
 ┌─────────────────────────────────────────────────────────┐
 │                  APPLICATION LAYER                       │
-│              (FastAPI Backend Services)                  │
+│         (Node.js + Express Backend Services)             │
 │                                                          │
 │  ┌──────────┬──────────┬──────────┬──────────┐         │
 │  │   Auth   │ Matching │   NLP    │  Forums  │         │
@@ -124,11 +127,12 @@ CI/CD:                GitHub Actions
 ┌──────────────┐  ┌─────────────┐  ┌──────────────────┐
 │  PostgreSQL  │  │   OpenAI    │  │  External APIs   │
 │   Database   │  │     API     │  │                  │
-│              │  │             │  │  • PubMed        │
-│  • Users     │  │  • GPT-4    │  │  • Clinical.gov  │
-│  • Profiles  │  │  • NLP      │  │  • ORCID         │
-│  • Trials    │  │  • Summary  │  │  • ResearchGate  │
-│  • Forums    │  │             │  │                  │
+│   (Prisma)   │  │             │  │  • PubMed        │
+│              │  │  • GPT-4    │  │  • Clinical.gov  │
+│  • Users     │  │  • NLP      │  │  • ORCID         │
+│  • Profiles  │  │  • Summary  │  │  • ResearchGate  │
+│  • Trials    │  │  • Embed    │  │  • Semantic      │
+│  • Forums    │  │             │  │    Scholar       │
 └──────────────┘  └─────────────┘  └──────────────────┘
 ```
 
@@ -140,7 +144,7 @@ CI/CD:                GitHub Actions
 
 Ensure you have the following installed:
 - **Node.js** 18.x or higher
-- **Python** 3.11 or higher  
+- **npm** or **yarn** package manager
 - **PostgreSQL** 15+ (or Supabase account)
 - **Git**
 
@@ -166,37 +170,35 @@ cd curalink
 # Navigate to backend
 cd backend
 
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
-
 # Install dependencies
-pip install -r requirements.txt
+npm install
 
 # Create environment file
 cp .env.example .env
 
 # Edit .env with your credentials:
 # DATABASE_URL=postgresql://user:password@localhost:5432/curalink
-# SECRET_KEY=your-secret-key-here
+# JWT_SECRET=your-super-secret-jwt-key
+# JWT_EXPIRES_IN=7d
 # OPENAI_API_KEY=your-openai-api-key
-# ALGORITHM=HS256
-# ACCESS_TOKEN_EXPIRE_MINUTES=30
+# NODE_ENV=development
+# PORT=8000
+
+# Generate Prisma client
+npx prisma generate
 
 # Run database migrations
-alembic upgrade head
+npx prisma migrate dev
+
+# Seed database (optional)
+npm run seed
 
 # Start backend server
-uvicorn app.main:app --reload --port 8000
+npm run dev
 ```
 
-**Backend will run at:** `http://localhost:8000`  
-**API Docs:** `http://localhost:8000/docs`
+**Backend will run at:** `http://localhost:8000`
+**API Docs:** `http://localhost:8000/api-docs`
 
 #### 3️⃣ Frontend Setup
 ```bash
@@ -225,46 +227,79 @@ npm run dev
 curalink/
 │
 ├── frontend/                        # Next.js Application
-│   ├── app/
-│   │   ├── page.tsx                # Landing page
-│   │   ├── login/                  # Authentication
-│   │   ├── signup/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── page.tsx            # Landing page
+│   │   │   ├── (auth)/
+│   │   │   │   ├── login/          # Login page
+│   │   │   │   └── signup/
+│   │   │   │       ├── patient/
+│   │   │   │       └── researcher/
+│   │   │   ├── (patient)/
+│   │   │   │   ├── dashboard/      # Patient dashboard
+│   │   │   │   ├── trials/         # Clinical trials search
+│   │   │   │   ├── experts/        # Health experts
+│   │   │   │   ├── publications/   # Medical publications
+│   │   │   │   └── favorites/      # Saved items
+│   │   │   ├── (researcher)/
+│   │   │   │   ├── researcher-dashboard/
+│   │   │   │   ├── collaborators/
+│   │   │   │   └── my-trials/
+│   │   │   └── (shared)/
+│   │   │       ├── forums/         # Community forums
+│   │   │       └── profile/
+│   │   ├── components/             # Reusable UI components
+│   │   │   ├── ui/                 # shadcn/ui components
+│   │   │   ├── layout/
 │   │   │   ├── patient/
-│   │   │   └── researcher/
-│   │   ├── dashboard/
-│   │   │   ├── patient/           # Patient dashboard
-│   │   │   └── researcher/        # Researcher dashboard
-│   │   ├── trials/                # Clinical trials search
-│   │   ├── publications/          # Medical publications
-│   │   ├── experts/               # Health experts directory
-│   │   ├── forums/                # Community forums
-│   │   └── favorites/             # Saved items
-│   ├── components/                # Reusable UI components
-│   ├── lib/                       # Utilities & API client
-│   └── styles/                    # Global styles
+│   │   │   ├── researcher/
+│   │   │   └── shared/
+│   │   └── lib/                    # Utilities & API client
+│   │       ├── api/
+│   │       ├── store/              # Zustand stores
+│   │       ├── hooks/
+│   │       └── types/
+│   └── public/                     # Static assets
 │
-├── backend/                        # FastAPI Application
-│   ├── app/
-│   │   ├── main.py                # FastAPI entry point
-│   │   ├── models/                # Database models
-│   │   ├── schemas/               # Pydantic validation schemas
-│   │   ├── routers/               # API endpoints
-│   │   │   ├── auth.py
-│   │   │   ├── patients.py
-│   │   │   ├── researchers.py
-│   │   │   ├── trials.py
-│   │   │   ├── publications.py
-│   │   │   └── forums.py
-│   │   ├── services/              # Business logic
-│   │   │   ├── matching.py        # AI matching algorithm
-│   │   │   └── nlp.py             # NLP processing
-│   │   └── integrations/          # External API clients
-│   │       ├── pubmed.py
-│   │       ├── clinicaltrials.py
-│   │       └── openai_helper.py
-│   └── tests/                     # Unit tests
+├── backend/                        # Node.js + Express Application
+│   ├── src/
+│   │   ├── server.ts               # Entry point
+│   │   ├── app.ts                  # Express app setup
+│   │   ├── config/                 # Configuration
+│   │   │   ├── database.ts
+│   │   │   └── env.ts
+│   │   ├── controllers/            # Request handlers
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── patient.controller.ts
+│   │   │   ├── researcher.controller.ts
+│   │   │   ├── trial.controller.ts
+│   │   │   └── forum.controller.ts
+│   │   ├── routes/                 # API routes
+│   │   │   ├── auth.routes.ts
+│   │   │   ├── patient.routes.ts
+│   │   │   ├── researcher.routes.ts
+│   │   │   └── trial.routes.ts
+│   │   ├── services/               # Business logic
+│   │   │   ├── auth.service.ts
+│   │   │   ├── matching.service.ts # AI matching
+│   │   │   ├── nlp.service.ts      # NLP processing
+│   │   │   └── summarization.service.ts
+│   │   ├── integrations/           # External API clients
+│   │   │   ├── openai.client.ts
+│   │   │   ├── pubmed.client.ts
+│   │   │   ├── clinicaltrials.client.ts
+│   │   │   └── orcid.client.ts
+│   │   ├── middleware/             # Express middleware
+│   │   │   ├── auth.middleware.ts
+│   │   │   └── error.middleware.ts
+│   │   ├── types/                  # TypeScript types
+│   │   └── utils/                  # Utility functions
+│   ├── prisma/
+│   │   ├── schema.prisma           # Database schema
+│   │   └── migrations/             # Database migrations
+│   └── tests/                      # Unit & integration tests
 │
-└── docs/                          # Documentation
+└── docs/                           # Documentation
     ├── API.md
     └── ARCHITECTURE.md
 ```
@@ -275,15 +310,27 @@ curalink/
 
 ### Backend `.env`
 ```env
+# Database
 DATABASE_URL=postgresql://user:password@localhost:5432/curalink
-SECRET_KEY=your-super-secret-key-change-this
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
 
+# Server
+NODE_ENV=development
+PORT=8000
+
+# JWT Authentication
+JWT_SECRET=your-super-secret-jwt-key-change-this
+JWT_EXPIRES_IN=7d
+
+# OpenAI API
 OPENAI_API_KEY=sk-...
+
+# External APIs (Optional)
 PUBMED_API_KEY=optional
 ORCID_CLIENT_ID=optional
 ORCID_CLIENT_SECRET=optional
+
+# CORS
+CORS_ORIGIN=http://localhost:3000
 ```
 
 ### Frontend `.env.local`
@@ -326,7 +373,7 @@ POST   /api/forums/posts         Create forum post
 POST   /api/favorites            Save favorite item
 ```
 
-**Full API documentation:** `http://localhost:8000/docs`
+**Full API documentation:** `http://localhost:8000/api-docs` (Swagger UI)
 
 ---
 
@@ -338,22 +385,22 @@ Our matching algorithm uses a combination of:
 - **Natural Language Processing** to extract medical entities from user input
 - **Vector Embeddings** to find semantic similarity between profiles
 - **Weighted Scoring** considering multiple factors (specialty, location, publications)
-```python
-# Simplified matching logic
-patient_conditions = ["brain cancer", "glioma"]
-researcher_specialties = ["neuro-oncology", "brain tumors"]
+```typescript
+// Simplified matching logic
+const patientConditions = ["brain cancer", "glioma"];
+const researcherSpecialties = ["neuro-oncology", "brain tumors"];
 
-# Calculate similarity score
-match_score = calculate_similarity(
-    patient_vector, 
-    researcher_vector,
-    weights={
-        'specialty': 0.4,
-        'publications': 0.3,
-        'location': 0.2,
-        'availability': 0.1
+// Calculate similarity score
+const matchScore = await calculateSimilarity(
+    patientVector,
+    researcherVector,
+    {
+        specialty: 0.4,
+        publications: 0.3,
+        location: 0.2,
+        availability: 0.1
     }
-)
+);
 ```
 
 ### 2. Natural Language Understanding
@@ -419,11 +466,14 @@ vercel --prod
 ```bash
 # Backend tests
 cd backend
-pytest
+npm test                    # Run all tests
+npm run test:watch         # Watch mode
+npm run test:coverage      # Coverage report
 
-# Frontend tests (if implemented)
+# Frontend tests
 cd frontend
-npm test
+npm test                   # Run all tests
+npm run test:e2e          # End-to-end tests
 ```
 
 ---
@@ -513,14 +563,3 @@ For questions, issues, or feedback:
 ⭐ Star this repo if you find it helpful!
 
 </div>
-
-💡 WHAT MAKES THIS README GREAT:
-✅ Clear problem statement - Why CuraLink exists
-✅ Professional presentation - Badges, formatting, structure
-✅ Complete tech stack - Shows your technical decisions
-✅ Easy setup instructions - Anyone can run it locally
-✅ Project structure - Clear organization
-✅ Future roadmap - Shows vision and planning
-✅ Contact info - Professional touch
-
-Want me to customize any section further? (e.g., add your name, GitHub username, specific features, etc.) 🚀RetryPAgive me single  Readme.md codeOrchestrated comprehensive README compilation for seamless copying.The user wants a single, complete README.md file that they can just copy and paste. Let me create one comprehensive README.md with all the sections in a single code block.markdown# 🏥 CuraLink
